@@ -32,6 +32,7 @@ class TStack {
       return m == size - 1;
     }
 };
+
 #endif
 #include <map>
 #include "tstack.h"
@@ -49,6 +50,7 @@ int scum(char n) {
       return -1;
     }
 }
+
 std::string infx2pstfx(std::string inf) {
   std::string res, res1;
   TStack<char, 100>stack1;
@@ -101,6 +103,7 @@ int scum1(const int& x, const int& y, const int& n) {
       return 0;
   }
 }
+
 int eval(std::string pref) {
   TStack<int, 100> stack1;
   std::string res = "";
