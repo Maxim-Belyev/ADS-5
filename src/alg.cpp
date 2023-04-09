@@ -102,7 +102,7 @@ int scum1(const int& x, const int& y, const int& n) {
   }
 }
 int eval(std::string pref) {
-   TStack<int, 100> stack1;
+  TStack<int, 100> stack1;
   std::string res = "";
   for (int i = 0; i < pref.size(); i++) {
     char el = pref[i];
