@@ -7,7 +7,6 @@ class TStack {
  private:
     T arr[100];
     int m;
-    
  public:
     TStack(): m(-1) {}
     void push(T value) {
