@@ -122,7 +122,7 @@ int eval(std::string pref) {
       stack1.pop();
       int a = stack1.get();
       stack1.pop();
-      stack1.push(schet(a, y, el));
+      stack1.push(scum1(a, y, el));
     }
   }
   return stack1.get();
