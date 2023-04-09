@@ -4,9 +4,11 @@
 #define INCLUDE_TSTACK_H_
 template<typename T, int size>
 class TStack {
+
 private:
   T arr[100];
   int m;
+
 public:
   TStack(): m(-1) {}
   void push(T value) {
