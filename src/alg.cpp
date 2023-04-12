@@ -33,7 +33,7 @@ class TStack {
     }
 };
 
-#endif
+#endif  // INCLUDE_TSTACK_H_
 #include <map>
 #include "tstack.h"
 int scum(char n) {
