@@ -1,97 +1,89 @@
 // Copyright 2021 NNTU-CS
-#include <map>
+#include <string>
+#include <climits>
 #include "tstack.h"
-int scum(char n) {
-  switch (n) {
-    case '(':
-      return 0;
-    case ')':
-      return 1;
-    case '+': case '-':
-      return 2;
-    case '*': case '/':
-      return 3;
-    default:
-      return -1;
+int prec(char c) {
+    if (c == '*' || c == '/') {
+        return 3;
     }
+    if (c == '+' || c == '-') {
+        return 4;
+    }
+    if (c == '&') {
+        return 8;
+    }
+    if (c == '^') {
+        return 9;
+    }
+    if (c == '|') {
+        return 10;
+    }
+    return INT_MAX;
 }
-
+bool isOperand(char c) {
+    return (c >= '0' && c <= '9');
+}
 std::string infx2pstfx(std::string inf) {
-  std::string res, res1;
-  TStack<char, 100>stack1;
-  for (auto& n : inf) {
-    int a = scum(n);
-    if (a == -1) {
-      res = res + n + ' ';
-    } else {
-      char el = stack1.get();
-      if (n == 0 || scum(el) < a || stack1.isEmpty()) {
-        stack1.push(n);
-      } else {
-        if (n == ')') {
-          while (scum(el) >= n) {
-            res = res + el + ' ';
-            stack1.pop();
-            el = stack1.get();
-          }
-          stack1.pop();
+    TStack<char, 100> s;
+    std::string postfix;
+    for (char c : inf) {
+        if (c == '(') {
+            s.push(c);
+        } else if (c == ')') {
+            while (s.top() != '(') {
+                postfix.push_back(s.top());
+                postfix.push_back(' ');
+                s.pop();
+            }
+            s.pop();
+        } else if (isOperand(c)) {
+            postfix.push_back(c);
+            postfix.push_back(' ');
         } else {
-          while (scum(el) >= a) {
-            res = res + el + ' ';
-            stack1.pop();
-            el = stack1.get();
-          }
-          stack1.push(n);
+            while (!s.isEmpty() && prec(c) >= prec(s.top())) {
+                postfix.push_back(s.top());
+                postfix.push_back(' ');
+                s.pop();
+            }
+            s.push(c);
         }
-      }
     }
-  }
-  while (!stack1.isEmpty()) {
-    res = res + stack1.get() + ' ';
-    stack1.pop();
-  }
-  for (int i = 0; i < res.size() - 1; i++)
-    res1 += res[i];
-  return res1;
-}
-int scum1(const int& x, const int& y, const int& n) {
-  switch (n) {
-    case '+':
-      return x + y;
-    case '-':
-      return x - y;
-    case '/':
-      return x / y;
-    case '*':
-      return x * y;
-    default:
-      return 0;
-  }
-}
-
-int eval(std::string pref) {
-  TStack<int, 100> stack1;
-  std::string res = "";
-  for (int i = 0; i < pref.size(); i++) {
-    char el = pref[i];
-    if (scum(el) == -1) {
-      if (pref[i] == ' ') {
-        continue;
-      } else if (isdigit(pref[i+1])) {
-        res += pref[i];
-        continue;
-      } else {
-        res += pref[i];
-        stack1.push(atoi(res.c_str()));
-        res = "";
-      }
-    } else {
-      int y = stack1.get();
-      stack1.pop();
-      int a = stack1.get();
-      stack1.pop();
-      stack1.push(scum1(a, y, el));
+    while (!s.isEmpty()) {
+        postfix.push_back(s.top());
+        postfix.push_back(' ');
+        s.pop();
     }
-  }
-  return stack1.get();
+    std::string www;
+    if (postfix[postfix.length() - 1] == ' ') {
+        for (int i = 0; i < postfix.length() - 1; i++) {
+            www += postfix[i];
+        }
+    }
+    return www;
+}
+int eval(std::string post) {
+    std::string v;
+    for (char c : post) if (c != ' ') v += c;
+    post = v;
+    TStack<int, 100> stack;
+    for (char c : post) {
+        if (c >= '0' && c <= '9') {
+            stack.push(c - '0');
+        } else {
+            int x = stack.top();
+            stack.pop();
+            int y = stack.top();
+            stack.pop();
+            if (c == '+') {
+                stack.push(y + x);
+            } else if (c == '-') {
+                stack.push(y - x);
+            } else if (c == '*') {
+                stack.push(y * x);
+            } else if (c == '/') {
+                stack.push(y / x);
+            }
+        }
+    }
+    return stack.top();
 }
