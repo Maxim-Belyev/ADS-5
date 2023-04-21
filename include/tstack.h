@@ -4,11 +4,11 @@
 #include <string>
 template<typename T, int size>
 class TStack {
-private:
+ private:
     T arr[100];
     int m;
 
-public:
+ public:
     TStack() : m(-1) {}
     void push(T value) {
         if (!isFull())
@@ -34,10 +34,9 @@ public:
     T top() {
         if (!isEmpty()) {
             return arr[m];
-        }
-        else {
+        } else {
             exit(EXIT_FAILURE);
         }
     }
 };
-#endif
+#endif // INCLUDE_TSTACKH
