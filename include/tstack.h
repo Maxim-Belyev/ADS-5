@@ -39,4 +39,4 @@ class TStack {
         }
     }
 };
-#endif // INCLUDE_TSTACKH
+#endif  // INCLUDE_TSTACKH
