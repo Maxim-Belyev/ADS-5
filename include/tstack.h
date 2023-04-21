@@ -1,3 +1,4 @@
+// Copyright 2021 NNTU-CS
 #ifndef INCLUDE_TSTACKH
 #define INCLUDE_TSTACKH
 #include <string>
