@@ -1,5 +1,4 @@
-// Copyright 2021 NNTU-CS
-INCLUDE_TSTACK_H_
+#ifndef INCLUDE_TSTACKH
 #define INCLUDE_TSTACKH
 #include <string>
 template<typename T, int size>
@@ -39,4 +38,4 @@ class TStack {
         }
     }
 };
-#endif // INCLUDE_TSTACK_H_
+#endif  // INCLUDE_TSTACKH
